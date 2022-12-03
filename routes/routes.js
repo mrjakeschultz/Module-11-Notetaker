@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const router = express.Router();
+const { v4: uuidv4 } = require("uuid");
 
 const noteRecord = require("../db/db.json");
 
@@ -40,6 +41,15 @@ router.delete("/api/notes/:id", (req, res) => {
 router.post("/api/notes", (req, res) => {
 	//write body of note
 	//need/get guid for id
+	const notes = JSON.parse(
+		fs.readFileSync(path.join(__dirname, "../db/db.json"))
+	);
+	const newNote = req.body;
+
+	newNote.id = uuidv4();
+	notes.push(newNote);
+	fs.writeFileSync(path.join(__dirname, "..db/db.json"), JSON.stringify(notes));
+	res.send("created");
 });
 
 module.exports = router;
