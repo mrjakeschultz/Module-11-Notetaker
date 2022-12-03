@@ -48,8 +48,18 @@ router.post("/api/notes", (req, res) => {
 
 	newNote.id = uuidv4();
 	notes.push(newNote);
-	fs.writeFileSync(path.join(__dirname, "..db/db.json"), JSON.stringify(notes));
+	fs.writeFileSync(
+		path.join(__dirname, "../db/db.json"),
+		JSON.stringify(notes)
+	);
 	res.send("created");
+});
+
+router.get("/notes", (req, res) => {
+	res.sendFile(path.join(__dirname, "../public/notes.html"));
+});
+router.get("/", (req, res) => {
+	res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 module.exports = router;
