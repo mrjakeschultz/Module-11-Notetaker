@@ -30,7 +30,7 @@ router.delete("/api/notes/:id", (req, res) => {
 				(yeetNote) => yeetNote.id !== req.params.id
 			);
 			fs.writeFileSync(
-				path.join(__dirname, "./db/db.json"),
+				path.join(__dirname, "../db/db.json"),
 				JSON.stringify(deleteNote)
 			);
 			res.json(deleteNote);
@@ -60,6 +60,10 @@ router.get("/notes", (req, res) => {
 });
 router.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
+router.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "../public/error.html"));
 });
 
 module.exports = router;
